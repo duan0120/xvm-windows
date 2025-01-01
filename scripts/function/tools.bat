@@ -30,4 +30,12 @@ if %ERRORLEVEL% neq 0 (
     echo Please install git first.
     exit /b 1
 )
+exit /b 0
+
+:check_7z
+where 7z >nul 2>nul
+if %ERRORLEVEL% neq 0 (
+    echo Please install 7-Zip first.
+    exit /b 1
+)
 exit /b 0 
