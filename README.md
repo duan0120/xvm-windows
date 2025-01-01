@@ -5,7 +5,7 @@
 ## Installation
 
 ```
-git clone https://github.com/duan0120/xvm.git ~/.xvm
+git clone https://github.com/duan0120/xvm-windows.git ~/.xvm
 ```
 
 Configure environment variables

@@ -5,7 +5,7 @@
 ## 安装方式
 
 ```
-git clone https://github.com/duan0120/xvm.git %USERPROFILE%/.xvm
+git clone https://github.com/duan0120/xvm-windows.git %USERPROFILE%/.xvm
 ```
 
 配置环境变量
