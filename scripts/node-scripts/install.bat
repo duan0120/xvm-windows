@@ -42,7 +42,7 @@ if %ERRORLEVEL% neq 0 (
 )
 
 mkdir "%version_path%\%version%"
-powershell -Command "Expand-Archive -Path node.zip -DestinationPath '%version_path%\%version%' -Force"
+powershell -ExecutionPolicy Bypass -Command "Expand-Archive -Path node.zip -DestinationPath '%version_path%\%version%' -Force"
 if %ERRORLEVEL% neq 0 (
     cd "%cur_path%"
     rd /s /q "%temp_dir%"

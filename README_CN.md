@@ -18,6 +18,8 @@ XVM_ROOT=%USERPROFILE%/.xvm
 ```
 %XVM_ROOT%\versions\node\default
 %XVM_ROOT%\versions\go\default\bin
+%XVM_ROOT%\versions\python\default
+%XVM_ROOT%\versions\python\default\Scripts
 ```
 
 ## 使用方式

@@ -23,7 +23,7 @@ if not exist "%version_path%\%version%" (
 for /f "tokens=*" %%i in ('node --version 2^>nul') do set "current_version=%%i"
 if "%current_version%"=="%version%" (
     :: Try to remove default symlink with elevated privileges
-    powershell -Command "Start-Process cmd -ArgumentList '/c rmdir \"%version_path%\default\"' -Verb RunAs -WindowStyle Hidden -Wait"
+    powershell -ExecutionPolicy Bypass -Command "Start-Process cmd -ArgumentList '/c rmdir \"%version_path%\default\"' -Verb RunAs -WindowStyle Hidden -Wait"
     timeout /t 1 /nobreak >nul
     if exist "%version_path%\default" (
         echo Error: Failed to remove default symlink

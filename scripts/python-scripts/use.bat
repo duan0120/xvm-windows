@@ -22,7 +22,7 @@ if not exist "%version_path%\%version%" (
 if exist "%version_path%\default" (
     rmdir "%version_path%\default" 2>nul
     if !ERRORLEVEL! neq 0 (
-        powershell -Command "Start-Process cmd -ArgumentList '/c rmdir \"%version_path%\default\"' -Verb RunAs -WindowStyle Hidden -Wait"
+        powershell -ExecutionPolicy Bypass -Command "Start-Process cmd -ArgumentList '/c rmdir \"%version_path%\default\"' -Verb RunAs -WindowStyle Hidden -Wait"
         timeout /t 1 /nobreak >nul
         if exist "%version_path%\default" (
             echo Error: Failed to remove existing symlink
@@ -31,7 +31,7 @@ if exist "%version_path%\default" (
     )
 )
 
-powershell -Command "Start-Process cmd -ArgumentList '/c mklink /D \"%version_path%\default\" \"%version_path%\%version%\"' -Verb RunAs -WindowStyle Hidden -Wait"
+powershell -ExecutionPolicy Bypass -Command "Start-Process cmd -ArgumentList '/c mklink /D \"%version_path%\default\" \"%version_path%\%version%\"' -Verb RunAs -WindowStyle Hidden -Wait"
 timeout /t 1 /nobreak >nul
 if not exist "%version_path%\default" (
     echo Error: Failed to create symlink

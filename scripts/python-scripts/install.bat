@@ -34,8 +34,9 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-:: Parse package info to find the correct version
-powershell -Command "$json = Get-Content 'package_info.json' | ConvertFrom-Json; $pkg = $json | Where-Object { $_.version -eq '%version%' -and $_.attrs.subdir -eq 'win-64' } | Select-Object -First 1; if ($pkg) { $pkg.download_url } else { 'not_found' }" > download_url.txt
+:: Parse package info to find the correct version - with ExecutionPolicy Bypass
+powershell -ExecutionPolicy Bypass -Command "$json = Get-Content 'package_info.json' | ConvertFrom-Json; $pkg = $json | Where-Object { $_.version -eq '%version%' -and $_.attrs.subdir -eq 'win-64' } | Select-Object -First 1; if ($pkg) { $pkg.download_url } else { 'not_found' }" > download_url.txt
+
 set /p DOWNLOAD_URL=<download_url.txt
 if "%DOWNLOAD_URL%"=="not_found" (
     cd "%cur_path%"
@@ -69,6 +70,7 @@ mkdir "%version_path%\%version%"
 
 :: Copy files maintaining directory structure
 echo Copying files to final location...
+xcopy /E /H /Y "include\*" "%version_path%\%version%\include\"
 xcopy /E /H /Y "DLLs\*" "%version_path%\%version%\DLLs\"
 xcopy /E /H /Y "Lib\*" "%version_path%\%version%\Lib\"
 xcopy /E /H /Y "libs\*" "%version_path%\%version%\libs\"
@@ -92,7 +94,7 @@ if %ERRORLEVEL% neq 0 (
 
 :: Clean up
 cd "%cur_path%"
-rd /s /q "%temp_dir%"
+@REM rd /s /q "%temp_dir%"
 
 echo python %version% has been installed successfully
 echo Please run 'xvm python use %version%' to set it

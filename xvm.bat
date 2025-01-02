@@ -29,6 +29,7 @@ if "%command%"=="-h" goto :show_usage
 if "%command%"=="help" goto :show_help
 if "%command%"=="node" goto :node_command
 if "%command%"=="go" goto :go_command
+if "%command%"=="python" goto :python_command
 goto :invalid_command
 
 :show_version
@@ -42,6 +43,7 @@ echo   -v, --version  Show the version of xvm
 echo   -h, --help     Show help for xvm
 echo   node           Manage node versions
 echo   go             Manage go versions
+echo   python         Manage python versions
 echo   help           Show help for a command
 echo.
 echo See 'xvm help ^<command^>' for information on a specific command.
@@ -66,6 +68,12 @@ exit /b %ERRORLEVEL%
 set "args="
 for /f "tokens=1,* delims= " %%a in ("%*") do set "args=%%b"
 call "%XVM_ROOT%\scripts\go.bat" %args%
+exit /b %ERRORLEVEL%
+
+:python_command
+set "args="
+for /f "tokens=1,* delims= " %%a in ("%*") do set "args=%%b"
+call "%XVM_ROOT%\scripts\python.bat" %args%
 exit /b %ERRORLEVEL%
 
 :invalid_command
