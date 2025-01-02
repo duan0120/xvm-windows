@@ -25,6 +25,13 @@ if exist "%config_file%" (
     exit /b 1
 )
 
+:: Check if source version is a virtual environment
+if exist "%version_path%\.%version%_*" (
+    echo Error: Cannot create alias from a virtual environment
+    echo Please use a regular Python version instead
+    exit /b 1
+)
+
 :: Check if source version exists
 if not exist "%version_path%\%version%" (
     echo Error: Python version %version% is not installed
