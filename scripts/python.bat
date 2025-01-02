@@ -36,6 +36,8 @@ if "%COMMAND%"=="install" (
 )
 if "%COMMAND%"=="uninstall" goto :uninstall
 if "%COMMAND%"=="use" goto :use
+if "%COMMAND%"=="activate" goto :activate
+if "%COMMAND%"=="deactivate" goto :deactivate
 echo "Unrecognized command line argument: '%COMMAND%'"
 exit /b 1
 
@@ -48,6 +50,8 @@ echo   ls-remote      List all remote versions of python
 echo   install        Install a specific version of python
 echo   uninstall      Uninstall a specific version of python
 echo   use            Set a specific version as active
+echo   activate       Activate a specific version
+echo   deactivate     Deactivate the current version
 exit /b 1
 
 :list
@@ -69,3 +73,12 @@ exit /b %ERRORLEVEL%
 :use
 call "%XVM_ROOT%\scripts\python-scripts\use.bat" %args%
 exit /b %ERRORLEVEL%
+
+:activate
+call "%XVM_ROOT%\scripts\python-scripts\activate.bat" %args%
+exit /b %ERRORLEVEL%
+
+:deactivate
+call "%XVM_ROOT%\scripts\python-scripts\deactivate.bat"
+exit /b %ERRORLEVEL%
+

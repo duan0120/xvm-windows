@@ -11,6 +11,13 @@ if "%~1"=="" (
 
 set "version=%~1"
 
+:: Check if this is a virtual environment
+if exist "%version_path%\.%version%_*" (
+    echo Error: '%version%' is a virtual environment
+    echo Please use 'xvm python activate %version%' instead
+    exit /b 1
+)
+
 :: Check if version exists
 if not exist "%version_path%\%version%" (
     echo Error: Version %version% is not installed
