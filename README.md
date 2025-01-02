@@ -91,3 +91,45 @@ Switch version
 ```
 xvm go use go1.19.2
 ```
+
+### python
+
+List available versions
+
+```
+xvm python ls-remote
+xvm python list
+```
+
+Install specific version
+
+```
+xvm python install 3.12.1 // default arch=arm64
+xvm python install 3.12.1 --arch=arm64
+xvm python install 3.12.1 --arch=386
+```
+
+Create virtual environment
+
+```
+xvm python alias test 3.12.1
+```
+
+Activate virtual environment
+
+```
+xvm python use test
+```
+
+Uninstall specific version
+
+```
+xvm python uninstall 3.12.1
+xvm python uninstall test
+```
+
+Switch version
+
+```
+xvm python use 3.12.1
+```

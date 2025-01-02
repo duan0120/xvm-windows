@@ -94,3 +94,45 @@ xvm go uninstall go1.19.2
 ```
 xvm go use go1.19.2
 ```
+
+### python
+
+查看版本
+
+```
+xvm python ls-remote
+xvm python list
+```
+
+安装指定版本
+
+```
+xvm python install 3.12.1 // default arch=arm64
+xvm python install 3.12.1 --arch=arm64
+xvm python install 3.12.1 --arch=386
+```
+
+创建虚拟环境
+
+```
+xvm python alias test 3.12.1
+```
+
+激活虚拟环境
+
+```
+xvm python use test
+```
+
+卸载指定版本
+
+```
+xvm python uninstall 3.12.1
+xvm python uninstall test
+```
+
+切换版本
+
+```
+xvm python use 3.12.1
+```
