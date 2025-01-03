@@ -47,6 +47,7 @@ endlocal & (
     set "PYTHONHOME=%version_path%\%alias_name%"
     set "PATH=%version_path%\%alias_name%;%version_path%\%alias_name%\Scripts;%PATH%"
     set "PYTHONPATH=%version_path%\%alias_name%\Lib\site-packages"
+    set "VIRTUAL_ENV=%version_path%\%alias_name%"
     set "PROMPT=(%alias_name%) %PROMPT%"
     echo Activated Python environment '%alias_name%'
     echo Type 'xvm python deactivate' to deactivate

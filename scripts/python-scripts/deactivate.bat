@@ -16,6 +16,7 @@ endlocal & (
     set "PROMPT=%_XVM_ORIGINAL_PROMPT%"
     set "PYTHONHOME="
     set "PYTHONPATH="
+    set "VIRTUAL_ENV="
     set "_XVM_PYTHON_ACTIVE="
     set "_XVM_PYTHON_ALIAS="
     set "_XVM_PYTHON_CONFIG="
