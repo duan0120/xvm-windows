@@ -77,6 +77,7 @@ Install specific version
 
 ```
 xvm go install go1.19.2
+# arch: amd64/arm64/386, default arch: amd64
 xvm go install go1.13.10 --arch=amd64
 ```
 
@@ -104,7 +105,7 @@ xvm python list
 Install specific version
 
 ```
-xvm python install 3.12.1 // default arch=arm64
+xvm python install 3.12.1 // default arch=amd64
 xvm python install 3.12.1 --arch=arm64
 xvm python install 3.12.1 --arch=386
 ```

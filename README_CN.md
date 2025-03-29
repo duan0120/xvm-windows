@@ -78,6 +78,7 @@ xvm go list
 
 ```
 xvm go install go1.19.2
+# 指定架构，amd64/386/arm64, 默认为amd64
 xvm go install go1.13.10 --arch=amd64
 ```
 
@@ -107,7 +108,7 @@ xvm python list
 安装指定版本
 
 ```
-xvm python install 3.12.1 // default arch=arm64
+xvm python install 3.12.1 // default arch=amd64
 xvm python install 3.12.1 --arch=arm64
 xvm python install 3.12.1 --arch=386
 ```
