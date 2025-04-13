@@ -153,10 +153,53 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
+:: Install pip
+echo Installing pip...
+curl -L "https://api.anaconda.org/package/anaconda/pip/files" -o pip_info.json
+if %ERRORLEVEL% neq 0 (
+    cd "%cur_path%"
+    rd /s /q "%temp_dir%"
+    echo Failed to get pip package info from Anaconda
+    exit /b 1
+)
+
+:: Find matching pip version based on Python version
+powershell -ExecutionPolicy Bypass -Command "$json = Get-Content 'pip_info.json' | ConvertFrom-Json; $pkg = $json | Where-Object { $_.attrs.subdir -eq 'win-%arch%' -and $_.attrs.build -like 'py27*' } | Sort-Object { [version]$_.version } -Descending | Select-Object -First 1; if ($pkg) { $pkg.download_url } else { 'not_found' }" > pip_url.txt
+
+set /p PIP_URL=<pip_url.txt
+if "%PIP_URL%"=="not_found" (
+    echo Warning: Could not find matching pip version for Python %version%
+    goto :cleanup
+)
+
+:: Download pip
+echo Downloading pip...
+curl -L "https:%PIP_URL%" -o "pip.tar.bz2"
+if %ERRORLEVEL% neq 0 (
+    echo Warning: Failed to download pip
+    goto :cleanup
+)
+
+:: Extract pip
+echo Extracting pip...
+7z x pip.tar.bz2 -so | 7z x -si -ttar -aoa > nul
+if %ERRORLEVEL% neq 0 (
+    echo Warning: Failed to extract pip package
+    goto :cleanup
+)
+
+:: Copy pip files
+xcopy /E /H /Y "Lib\site-packages\pip" "%version_path%\%version%\Lib\site-packages\pip\"
+xcopy /E /H /Y "Lib\site-packages\pip-*.dist-info" "%version_path%\%version%\Lib\site-packages\"
+xcopy /Y "Scripts\pip*.exe" "%version_path%\%version%\Scripts\"
+xcopy /Y "Scripts\pip*.py" "%version_path%\%version%\Scripts\"
+xcopy /Y "Scripts\pip*-script.py" "%version_path%\%version%\Scripts\"
+
+:cleanup
 :: Clean up
 cd "%cur_path%"
 rd /s /q "%temp_dir%"
 
 echo Python %version% has been installed successfully
 echo Please run 'xvm python use %version%' to set it
-exit /b 0 
+exit /b 0
