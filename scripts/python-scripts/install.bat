@@ -153,6 +153,8 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
+%version_path%\%version%\python.exe -m ensurepip
+
 :: Clean up
 cd "%cur_path%"
 rd /s /q "%temp_dir%"
