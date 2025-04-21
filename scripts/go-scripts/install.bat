@@ -72,6 +72,12 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
+:: Delete the zip file after extraction
+del /f /q "golang.zip"
+if %ERRORLEVEL% neq 0 (
+    echo Warning: Failed to delete golang.zip file
+)
+
 :: Move files and directories from nested directory to version directory
 xcopy "%version_path%\%version%\go\*" "%version_path%\%version%\" /E /H /Y
 rd /s /q "%version_path%\%version%\go"
@@ -81,4 +87,4 @@ rd /s /q "%temp_dir%"
 
 echo golang %version% has been installed successfully
 echo Please run 'xvm go use %version%' to set it
-exit /b 0 
+exit /b 0
