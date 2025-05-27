@@ -7,6 +7,11 @@ set "version_path=%XVM_ROOT%\versions\go"
 set "current_version="
 for /f "tokens=*" %%i in ('go env GOVERSION 2^>nul') do set "current_version=%%i"
 
+:: If GOVERSION is empty, try parsing from 'go version' command
+if "!current_version!"=="" (
+    for /f "tokens=3" %%i in ('go version 2^>nul') do set "current_version=%%i"
+)
+
 :: List installed versions
 if exist "%version_path%" (
     for /d %%V in ("%version_path%\go*") do (

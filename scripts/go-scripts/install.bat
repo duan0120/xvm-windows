@@ -6,7 +6,7 @@ set "cur_path=%CD%"
 
 :: Check arguments
 if "%~1"=="" (
-    echo Usage: xvm go install ^<version^> [--arch=^<arch^>]
+    echo Usage: xvm go install ^<version^> [--arch=^<arch^> or --arch ^<arch^>]
     exit /b 1
 )
 
@@ -14,20 +14,24 @@ if "%~1"=="" (
 set "version=%~1"
 set "arch=amd64"
 
-:parse_args
-shift
-if "%~1"=="" goto continue
-if "%~1:~0,7%"=="--arch=" (
-    set "arch=%~1:~7%"
-    if not "!arch!"=="amd64" if not "!arch!"=="386" if not "!arch!"=="arm64" (
-        echo Unsupported architecture: !arch!. Supported architectures: amd64, 386, arm64
+:: Process --arch parameter if present
+if "%~2"=="--arch" (
+    if "%~3"=="" (
+        echo Error: --arch requires an architecture value
         exit /b 1
     )
-    goto parse_args
+    set "arch=%~3"
+) else if "%~2:~0,7%"=="--arch=" (
+    set "arg=%~2"
+    set "arch=!arg:~7!"
 )
-goto parse_args
 
-:continue
+:: Validate architecture
+if not "!arch!"=="amd64" if not "!arch!"=="386" if not "!arch!"=="arm64" (
+    echo Unsupported architecture: !arch!. Supported architectures: amd64, 386, arm64
+    exit /b 1
+)
+
 :: Normalize version
 if not "%version:~0,2%"=="go" set "version=go%version%"
 
@@ -52,9 +56,9 @@ if exist "%XVM_ROOT%\scripts\go-scripts\proxy" (
 
 :: Download and install
 set "download_url=%pkg_url%/dl/%version%.%os%-%arch%.zip"
-echo Downloading from %download_url%
+echo Downloading from !download_url!
 
-curl -L "%download_url%" -o "golang.zip"
+curl -L "!download_url!" -o "golang.zip"
 if %ERRORLEVEL% neq 0 (
     cd "%cur_path%"
     rd /s /q "%temp_dir%"
